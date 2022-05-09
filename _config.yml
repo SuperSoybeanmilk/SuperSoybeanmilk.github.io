@@ -111,7 +111,7 @@ bangumi:
   enable: true
   path:
   vmid: 13665792
-  title: '追番列表'
+  title: 'I401追番列表'
   quote: '我不是二次元'
   show: 1
   loading:
