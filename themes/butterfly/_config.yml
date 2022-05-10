@@ -496,7 +496,7 @@ tag_ui: # 留空或 index
 background: url(/img/top.png)
 
 # Footer Background
-footer_bg: true
+footer_bg: false
 
 # the position of bottom right button/default unit: px (右下角按鈕距離底部的距離/默認單位為px)
 rightside-bottom:
@@ -632,7 +632,7 @@ aside:
       link: https://github.com/SuperSoybeanmilk
   card_announcement:
     enable: true
-    content: 最強伝説と炼铜の专家!變態不審者です
+    content: 欢迎来到I401的博客
   card_recent_post:
     enable: true
     limit: 5 # if set 0 will show all
@@ -773,7 +773,7 @@ pjax:
 
 # Inject the css and script (aplayer/meting)
 aplayerInject:
-  enable: false
+  enable: true
   per_page: true
 
 # Snackbar (Toast Notification 彈窗)
@@ -834,6 +834,7 @@ inject:
     - <link rel="stylesheet" href="/css/custom/test.css"">
   bottom:
     - <script src="/live2d-widget/autoload.js"></script>
+    - <div class="aplayer no-destroy" data-id="60198" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div>
     # - <script src="xxxx"></script>
 
 
@@ -860,14 +861,14 @@ footer_beautify:
   runtime_js: /js/footer-beautify-runtime.js
   runtime_css: https://npm.elemecdn.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.css
   # 徽标部分配置项
-  swiperpara: 3 #若非0，则开启轮播功能，每行徽标个数
+  swiperpara: 0 #若非0，则开启轮播功能，每行徽标个数
   bdageitem:
-    - link: https://supersoybeanmilk.github.io/ #徽标指向网站链接
-      shields: https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo #徽标API
-      message: 博客框架为Hexo_v5.4.0 #徽标提示语
-    - link: https://butterfly.js.org/
-      shields: https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender
-      message: 主题版本Butterfly_v3.8.2
+    #- link: https://supersoybeanmilk.github.io/ #徽标指向网站链接
+    #  shields: https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo #徽标API
+    #  message: 博客框架为Hexo_v5.4.0 #徽标提示语
+    #- link: https://butterfly.js.org/
+    #  shields: https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender
+    #  message: 主题版本Butterfly_v3.8.2
     - link: https://www.jsdelivr.com/
       shields: https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&logo=jsDelivr
       message: 本站使用JsDelivr为静态资源提供CDN加速
