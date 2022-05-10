@@ -834,7 +834,7 @@ inject:
     - <link rel="stylesheet" href="/css/custom/test.css"">
   bottom:
     - <script src="/live2d-widget/autoload.js"></script>
-    - <div class="aplayer no-destroy" data-id="60198" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div>
+    - <div class="aplayer no-destroy" data-id="494330027" data-server="netease" data-type="song" data-fixed="true" data-autoplay="true"> </div> #虹色蝶
     # - <script src="xxxx"></script>
 
 
