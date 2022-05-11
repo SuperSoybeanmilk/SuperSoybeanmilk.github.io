@@ -36,8 +36,10 @@ copy:
 # formal:
 #   icon: link || the description
 social:
-  # fab fa-github: https://github.com/xxxxx || Github
-  # fas fa-envelope: mailto:xxxxxx@gmail.com || Email
+  fa-brands fa-bilibili: https://space.bilibili.com/13665792 || bilibili
+  fa-brands fa-qq: tencent://message/?uin=1476390042 || QQ
+  fas fa-envelope: mailto:1476390042@qq.com || Email
+
 
 # search (搜索)
 # see https://butterfly.js.org/posts/ceeb73f/#搜索系統
@@ -834,7 +836,7 @@ inject:
     - <link rel="stylesheet" href="/css/custom/test.css"">
   bottom:
     - <script src="/live2d-widget/autoload.js"></script>
-    - <div class="aplayer no-destroy" data-id="7429070758" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div> #虹色蝶
+    - <div class="aplayer no-destroy" data-id="7429070758" data-server="netease" data-type="playlist" data-autoplay="false" data-fixed="true"> </div> #虹色蝶
     # - <script src="xxxx"></script>
 
 
