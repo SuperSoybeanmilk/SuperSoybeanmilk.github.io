@@ -12,6 +12,7 @@
     "version": "6.1.0"
   },
   "dependencies": {
+    "canvas": "^2.9.1",
     "hexo": "^6.0.0",
     "hexo-asset-image": "^1.0.0",
     "hexo-bilibili-bangumi": "^1.7.4",
@@ -30,5 +31,12 @@
     "hexo-server": "^3.0.0",
     "hexo-tag-aplayer": "^3.0.4",
     "hexo-theme-landscape": "^0.0.3"
+  },
+  "devDependencies": {
+    "bufferutil": "^4.0.6",
+    "utf-8-validate": "^5.0.9"
+  },
+  "optionalDependencies": {
+    "fsevents": "*"
   }
 }
