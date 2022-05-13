@@ -833,7 +833,7 @@ inject:
     #ad:
     - <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
     - <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
-    - <link rel="stylesheet" href="/css/custom/test.css"">
+    - <link rel="stylesheet" href="/css/custom/beauty.css"">
   bottom:
     - <script src="/live2d-widget/autoload.js"></script>
     - <div class="aplayer no-destroy" data-id="7429070758" data-server="netease" data-type="playlist" data-autoplay="false" data-fixed="true"> </div> #虹色蝶
