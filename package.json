@@ -15,7 +15,7 @@
     "canvas": "^2.9.1",
     "hexo": "^6.0.0",
     "hexo-asset-image": "^1.0.0",
-    "hexo-bilibili-bangumi": "^1.7.4",
+    "hexo-bilibili-bangumi": "^1.7.5",
     "hexo-butterfly-footer-beautify": "^1.0.6",
     "hexo-deployer-git": "^3.0.0",
     "hexo-electric-clock": "^1.1.0",
