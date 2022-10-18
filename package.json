@@ -33,7 +33,7 @@
     "hexo-theme-landscape": "^0.0.3"
   },
   "devDependencies": {
-    "bufferutil": "^4.0.6",
+    "bufferutil": "^4.0.7",
     "utf-8-validate": "^5.0.9"
   },
   "optionalDependencies": {
