@@ -3,6 +3,7 @@ toc: true
 #toc_number: 1
 title: Unity Mirror多人联机框架基础开发
 date: 2024-06-17 15:07:00
+cover: /img/cover/bq.png
 tags:
     - unty
     - Mirror
