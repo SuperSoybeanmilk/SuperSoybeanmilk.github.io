@@ -4,8 +4,9 @@ toc: true
 title: Unity Mirror插件踩坑合集
 date: 2024-06-12 15:10:00
 tags:
-    - hexo
-    - butterfly
+    - unty
+    - Mirror
+    - 状态同步
 ---
 
 # 🎲报错
