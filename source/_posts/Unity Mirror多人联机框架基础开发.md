@@ -166,3 +166,9 @@ public class PlayerControl : NetworkBehaviour
 ![18](18.png)
 
 ## 🎮发布测试
+最后就是发布测试了，先打包一个windows程序出来，然后ipconfig查一下自己电脑当前ip是多少。先启动编辑器内的场景点击Host（Sever+Client）这个按钮就可以作为服务端启动（下面不要填localhost填自己的ip，否则不起作用）。
+![19](19.png)
+然后再启动刚刚打包出来的客户端，输入ip然后点Client
+![22](22.png)
+这个时候就可以看到效果了
+![21](21.png)
