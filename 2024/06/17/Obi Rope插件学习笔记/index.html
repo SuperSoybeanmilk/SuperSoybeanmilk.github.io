@@ -1,0 +1,357 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Obi Rope插件学习笔记 | I401</title><meta name="keywords" content="unty,Obi Rope,绳子"><meta name="author" content="I401"><meta name="copyright" content="I401"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本篇文章参考自Obi官方文档 🎲Obi Rope Blueprint🎮Rope Blueprint简介Rope Blueprint根据官方的说法就是使用距离(Distance)和弯曲约束(Bend Constraints)通过连接粒子建立的。由于一般情况下粒子没有方向（只有距离），因此无法模拟扭转效果，并且绳索不能保持其静止的形状。绳索能扭转&#x2F;分裂并且运行时长度可变，使用方法会在下方">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Obi Rope插件学习笔记">
+<meta property="og:url" content="https://supersoybeanmilk.github.io/2024/06/17/Obi%20Rope%E6%8F%92%E4%BB%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="I401">
+<meta property="og:description" content="本篇文章参考自Obi官方文档 🎲Obi Rope Blueprint🎮Rope Blueprint简介Rope Blueprint根据官方的说法就是使用距离(Distance)和弯曲约束(Bend Constraints)通过连接粒子建立的。由于一般情况下粒子没有方向（只有距离），因此无法模拟扭转效果，并且绳索不能保持其静止的形状。绳索能扭转&#x2F;分裂并且运行时长度可变，使用方法会在下方">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://supersoybeanmilk.github.io/img/cover/bq.png">
+<meta property="article:published_time" content="2024-06-17T07:07:00.000Z">
+<meta property="article:modified_time" content="2024-08-12T09:30:22.356Z">
+<meta property="article:author" content="I401">
+<meta property="article:tag" content="unty">
+<meta property="article:tag" content="Obi Rope">
+<meta property="article:tag" content="绳子">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://supersoybeanmilk.github.io/img/cover/bq.png"><link rel="shortcut icon" href="../../../../img/head.png"><link rel="canonical" href="https://supersoybeanmilk.github.io/2024/06/17/Obi%20Rope%E6%8F%92%E4%BB%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="../../../../css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Obi Rope插件学习笔记',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-08-12 17:30:22'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"><link rel="stylesheet" href="/css/custom/beauty.css""><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/hexo-electric-clock@1.0.6/clock.css"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="../img/head.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="../archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="../tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="../categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="../index.html"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="../archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="../tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="../link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="../bangumis/"><i class="fa-fw fas fa-video"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="../about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('../../../../img/cover/bq.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="../index.html">I401</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="../index.html"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="../archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="../tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="../link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="../bangumis/"><i class="fa-fw fas fa-video"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="../about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Obi Rope插件学习笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-06-17T07:07:00.000Z" title="发表于 2024-06-17 15:07:00">2024-06-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-08-12T09:30:22.356Z" title="更新于 2024-08-12 17:30:22">2024-08-12</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Obi Rope插件学习笔记"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>本篇文章参考自<a target="_blank" rel="noopener" href="http://obi.virtualmethodstudio.com/tutorials/index.html">Obi官方文档</a></p>
+<h1 id="🎲Obi-Rope-Blueprint"><a href="#🎲Obi-Rope-Blueprint" class="headerlink" title="🎲Obi Rope Blueprint"></a>🎲Obi Rope Blueprint</h1><h2 id="🎮Rope-Blueprint简介"><a href="#🎮Rope-Blueprint简介" class="headerlink" title="🎮Rope Blueprint简介"></a>🎮Rope Blueprint简介</h2><p>Rope Blueprint根据官方的说法就是使用距离(Distance)和弯曲约束(Bend Constraints)通过连接粒子建立的。由于一般情况下粒子没有方向（只有距离），因此无法模拟扭转效果，并且绳索不能保持其静止的形状。绳索能扭转&#x2F;分裂并且运行时长度可变，使用方法会在下方Obi Rope讲到。</p>
+<p>另外在官方文档下还有一个Rod Blueprints这个就不多做介绍了简单的说一下就是使用伸缩(Stretch)和弯曲约束通(Bend Constraints)过连接有向粒子建立的，这个比绳索要更复杂，可以模拟弯曲静止的效果，所以叫杆，但是这个比起绳子(Rope Blueprint)来说不可以撕裂&#x2F;拆分，长度也不能在运行时更改，所以一般用来做弹簧，天线等。<br><img src="/.io//ropes.gif" alt="蓝色是杆子，红色是绳子"></p>
+<h2 id="🎮Rope-Blueprint属性"><a href="#🎮Rope-Blueprint属性" class="headerlink" title="🎮Rope Blueprint属性"></a>🎮Rope Blueprint属性</h2><p>如果要创建一个基础的Rope Blueprint&#x2F;Rod Blueprint，通过在Project窗口右击→Create→Obi→Rope blueprint&#x2F;Rod blueprint.<br><img src="/.io//1.jpg" alt="1"></p>
+<h3 id="Thinckness（厚度）"><a href="#Thinckness（厚度）" class="headerlink" title="Thinckness（厚度）"></a><strong>Thinckness（厚度）</strong></h3><p>生成绳子的粒子半径</p>
+<h3 id="Resolution（分辨率）"><a href="#Resolution（分辨率）" class="headerlink" title="Resolution（分辨率）"></a><strong>Resolution（分辨率）</strong></h3><p>单位长度粒子的密度。<em>值为1</em> <em>值为0.5</em> 的话就会比较稀疏不会产生接触，<em>值小于0.5</em> 的话会产生很大的间隔，这会对碰撞检测产生很大的影响，但是优点是性能很好。<br><img src="/.io//2.jpg" alt="2"></p>
+<p>在内部，用于根据分辨率计算绳索中粒子数量的公式为 particleCount &#x3D; ropeLength &#x2F; ropeThickness * resolution.<br>如果在运行时创建绳索，可以使用以下公式计算所需的分辨率，以获得绳索中特定数量的粒子 resolution &#x3D; particleCount &#x2F; (ropeLength &#x2F; ropeThickness)</p>
+<h3 id="Pooled-Particles（汇集粒子，仅限Rope-Blueprint）"><a href="#Pooled-Particles（汇集粒子，仅限Rope-Blueprint）" class="headerlink" title="Pooled Particles（汇集粒子，仅限Rope Blueprint）"></a><strong>Pooled Particles（汇集粒子，仅限Rope Blueprint）</strong></h3><p>这个我个人的理解就是额外的粒子，比如在你做的一个吊机，他的绳子是可以伸缩的，当你增加绳子长度而产生额外粒子的时候就是从这个里面增加的，如果你只是设置了10那么等你去增加绳子长度的时候只能增加一点，加完10个粒子的绳子长度后绳子长度就不会改变了。所以如果绳子静止的情况下可以改为0就行，需要做缩放的绳子效果时就可以把这个值给高一点。</p>
+<h1 id="🎲Obi-Solver"><a href="#🎲Obi-Solver" class="headerlink" title="🎲Obi Solver"></a>🎲Obi Solver</h1><h2 id="🎮Obi-Solver简介"><a href="#🎮Obi-Solver简介" class="headerlink" title="🎮Obi Solver简介"></a>🎮Obi Solver简介</h2><p>Obi Solver是Obi中最重要的组件，它执行模拟粒子物理，和执行约束的组件。关于这个有3点比较重要：<br>他们可以添加到场景中的任何GameObject中，并且可以有多个Obi Solver </p>
+<p>每一个Actor必须在Obi Solver的层级下才可以执行，这些Actor物理模拟的具体行为和组件比如下面会提到的Obi Rope，或者布料(Obi Cloth)这些都是Obi Actor的派生类。  </p>
+<p>不同的Obi Solver相互独立，所以他们的Actor不会相互碰撞，只有同一Obi Solver下的Actor才会对彼此作出反应</p>
+<p>个人理解Obi Solver就像是一个房子里面住的人就是Actor一栋楼里面可以有多个房子，每个房子互不影响。</p>
+<h2 id="🎮Obi-Solver属性"><a href="#🎮Obi-Solver属性" class="headerlink" title="🎮Obi Solver属性"></a>🎮Obi Solver属性</h2><p>如果要创建一个Obi Solver可以在Hierarchy里右击→3D Object→Obi→Obi Solver.<br><img src="/.io//3.jpg" alt="3"></p>
+<h3 id="Backend（后台）"><a href="#Backend（后台）" class="headerlink" title="Backend（后台）"></a><strong>Backend（后台）</strong></h3><p>这个算是一个物理效果实现的底层，不同的Backend有不同的平台兼容性，性能和功能。场景中的每个Obi Solver都可以选择不同的Backedn属性，但是大部分情况下还是保持一致最好。目前的话有两个一个是Oni一个是Burst.  </p>
+<h4 id="Oni"><a href="#Oni" class="headerlink" title="Oni"></a><em>Oni</em></h4><p>是obi一个比较早的后台，用的是c++编写的本地库，所有大部分平台都支持，他是完全基于cpu的后台使用了多线程和单指令多数据的内嵌函数。  </p>
+<h4 id="Burst"><a href="#Burst" class="headerlink" title="Burst"></a><em>Burst</em></h4><p>这个是Obi 5.5后的新有的后台，它是由睾贵的C#编写，用的是unity的Burst编译器和作业系统，它支持所有可以运行作业和Burst编译器可以编译的平台。与Oni一样，它完全基于CPU，并大量使用多线程和SIMD。使用Burst的时候大部分情况下新能要比Oni强，所以一般情况下Burst的优先级要比Oni高。  </p>
+<p>当然使用Burst的话要导入一些包  </p>
+<blockquote>
+<p>Burst 1.3.3 或以上<br>Collections 0.8.0-preview 5 或以上<br>Mathematics 1.0.1 或以上<br>Jobs 0.2.9-preview.15 或以上</p>
+</blockquote>
+<p>上面的包 Burst应该是自带，Collectionsll在unity自带的包里面也有导入就行 Mathematics也是自带，最后Jobs因为是预览版本所以要用链接导入（unity 2021以及后的版本）<strong>com.unity.jobs</strong>  </p>
+<p><img src="/.io//6.jpg" alt="6"><br><font color="red"><br>请注意，为了使用Burst后端编辑器时的正常性能，必须启用Burst编译并禁用安全检查，作业调试器和作业泄漏检测<br></font><br><img src="/.io//4.jpg" alt="4"> <img src="/.io//5.jpg" alt="5"><br><font color="red"><br>另外，请记住Burst默认情况下在编辑器中使用异步编译。这意味着模拟的前几帧将明显较慢，因为Burst在场景运行时仍在编译作业。您可以在Jobs→Burst菜单中启用同步编译，这将强制Burst在进入播放模式之前编译所有作业。<br></font></p>
+<h3 id="Mode（模式）"><a href="#Mode（模式）" class="headerlink" title="Mode（模式）"></a><strong>Mode（模式）</strong></h3><p>Solver可以在2D或者3D模式下模拟，2D的话模拟仅发生在2D场景中，只会发生在XY的平面中。2D模式通常与2D对撞机的使用相结合。但是，为了方便起见，你也3D 2D一起使用。</p>
+<h3 id="Interpolation（插值）"><a href="#Interpolation（插值）" class="headerlink" title="Interpolation（插值）"></a><strong>Interpolation（插值）</strong></h3><p>用于渲染粒子的插值模式。None计算速度更快，但是Interpolate会在粒子的实际物理位置和渲染位置之间插入1帧的延迟。Interpolate在慢动作效果的时候会更好,因为他能在unity的Timescale&lt;1时避免卡顿。</p>
+<h3 id="Gravity-Space（重力空间）"><a href="#Gravity-Space（重力空间）" class="headerlink" title="Gravity Space（重力空间）"></a><strong>Gravity Space（重力空间）</strong></h3><p>是在Solver的局部空间(Self)还是在世界空间(World)中应用重力，如果设为Self，重力方向将和Solver一起旋转。</p>
+<h3 id="Gravity（重力）"><a href="#Gravity（重力）" class="headerlink" title="Gravity（重力）"></a><strong>Gravity（重力）</strong></h3><p>Solver重力的方向和大小，以Slover的局部空间表示</p>
+<h3 id="Sleep-Threshold（休眠阈值）"><a href="#Sleep-Threshold（休眠阈值）" class="headerlink" title="Sleep Threshold（休眠阈值）"></a><strong>Sleep Threshold（休眠阈值）</strong></h3><p>任速度能低于该值的粒子都将被冻结在当前位置。一般来说默认值就够了。</p>
+<h3 id="Damping（阻尼）"><a href="#Damping（阻尼）" class="headerlink" title="Damping（阻尼）"></a><strong>Damping（阻尼）</strong></h3><p>应用于粒子速度的速度阻尼。增加它以减少它们的动能。下图分别为0.3阻尼和1阻尼时的效果<br><img src="/.io//Damping0.3.gif" alt="阻尼为0.3时">  <img src="/.io//Damping1.gif" alt="阻尼为1时"></p>
+<h3 id="World-linear-Inertia-Scale（世界线性惯性标度）"><a href="#World-linear-Inertia-Scale（世界线性惯性标度）" class="headerlink" title="World linear Inertia Scale（世界线性惯性标度）"></a><strong>World linear Inertia Scale（世界线性惯性标度）</strong></h3><p>控制Solver变换的世界空间线性惯性应用于粒子的程度。值的范围从0（无）到1（100%）。<br>大概意思就是你对这个物体用的力有多少会继承到他这个Solver上，官方的说明不是很清楚这边上两组图片对比一下，前面是设为0时的状态后面是设为1的状态<font color="red">（注意看左边垂直的绳子的效果）</font><br><img src="/.io//WLIS0.gif" alt="值为0时"><br><img src="/.io//WLIS1.gif" alt="值为1时">  </p>
+<h3 id="World-Angular-Inertia-Scale（世界线性惯性标度）"><a href="#World-Angular-Inertia-Scale（世界线性惯性标度）" class="headerlink" title="World Angular Inertia Scale（世界线性惯性标度）"></a><strong>World Angular Inertia Scale（世界线性惯性标度）</strong></h3><p>跟前面的属性是一样的，只不过这个前面那个是线性惯性(translations)现在这个是角惯性(rotations)</p>
+<h3 id="Max-Anisotropy（最大各向异性）"><a href="#Max-Anisotropy（最大各向异性）" class="headerlink" title="Max Anisotropy（最大各向异性）"></a><strong>Max Anisotropy（最大各向异性）</strong></h3><p>这个一般用在流体中，Obi中的流体粒子可以是椭圆形的，而不是完全的球形。这用于更好地使其形状适应所代表对象的表面，从而实现更准确的碰撞检测和更平滑的渲染。最大各向异性可以确定椭球体半径之间的最大比率，值为1将强制所有粒子为球形，值大于1的时候就会更椭圆一点<br><img src="/.io//7.jpg" alt="7"> </p>
+<h3 id="Simulate-When-Invisible（不可见模拟）"><a href="#Simulate-When-Invisible（不可见模拟）" class="headerlink" title="Simulate When Invisible（不可见模拟）"></a><strong>Simulate When Invisible（不可见模拟）</strong></h3><p>当Solver在所有相机中不可见时是否应该保持模拟。保持启用你的模拟将会不停更新，禁用当没有任何相机看到的时候就会停止更新。</p>
+<h3 id="Collision-settings"><a href="#Collision-settings" class="headerlink" title="Collision settings"></a><strong>Collision settings</strong></h3><h4 id="Continuous-collision-detection-CCD"><a href="#Continuous-collision-detection-CCD" class="headerlink" title="Continuous collision detection (CCD)"></a><strong>Continuous collision detection (CCD)</strong></h4><p>碰撞检测期间用于扩展碰撞器边界框的刚体速度百分比。值为1将使用100%的速度，从而实现完全连续的碰撞检测。值为0将导致纯静态碰撞检测。</p>
+<h4 id="Collision-margin-碰撞边距"><a href="#Collision-margin-碰撞边距" class="headerlink" title="Collision margin (碰撞边距)"></a><strong>Collision margin (碰撞边距)</strong></h4><p>添加到粒子边界框（CCD扩展后）的边距，用于生成接触。粒子边界框内的任何对撞机&#x2F;粒子都将被考虑用于接触生成。该值应保持相对较低。较大的值将产生更多的接触，这可以提高非常复杂场景中的鲁棒性，但会对性能产生负面影响。<br><img src="/.io//8.jpg" alt="8"><br>黄色的是当前粒子位置浅黄色是下一帧粒子位置，以这两个点生产的矩形内再加上给入的数值生成的边距就是碰撞范围。</p>
+<h4 id="Max-Depenetration-最大穿透速度"><a href="#Max-Depenetration-最大穿透速度" class="headerlink" title="Max Depenetration (最大穿透速度)"></a><strong>Max Depenetration (最大穿透速度)</strong></h4><p>将粒子从对撞器中弹出的最大速度（单位：米&#x2F;秒）。这仅适用于已经在对撞器内开始物理步骤的粒子。较低的值将缓慢地将粒子从对撞机中取出。高值允许求解器立即取出粒子，使其“跳出”对撞机。<br><img src="/.io//low_depenetration.gif" alt="值为0.1时"><br><img src="/.io//high_depenetration.gif" alt="值为10时"></p>
+<h4 id="Shock-propagation-激波传播"><a href="#Shock-propagation-激波传播" class="headerlink" title="Shock propagation (激波传播)"></a><strong>Shock propagation (激波传播)</strong></h4><p>值高的话将人为地增加支持其他粒子的粒子的质量。 使用它可以获得更好的堆叠稳定性。</p>
+<h4 id="Surface-Collision-Iterations-表面碰撞迭代"><a href="#Surface-Collision-Iterations-表面碰撞迭代" class="headerlink" title="Surface Collision Iterations (表面碰撞迭代)"></a><strong>Surface Collision Iterations (表面碰撞迭代)</strong></h4><p>优化表面碰撞所执行的最大迭代次数。</p>
+<h4 id="Surface-collision-tolerance-表面碰撞容限"><a href="#Surface-collision-tolerance-表面碰撞容限" class="headerlink" title="Surface collision tolerance (表面碰撞容限)"></a><strong>Surface collision tolerance (表面碰撞容限)</strong></h4><p>容差阈值，低于该阈值，曲面碰撞细化将停止。稍微增加一点可以帮助获得更稳定的平面碰撞。</p>
+<h3 id="Constraint-settings（约束设置）"><a href="#Constraint-settings（约束设置）" class="headerlink" title="Constraint settings（约束设置）"></a><strong>Constraint settings（约束设置）</strong></h3><p>点击方框来启用或禁用约束。<br>你可以全局禁用或启用由Solver管理的所有Actor的每种约束类型。以这种方式禁用约束（与禁用单个角色的约束组件相反）将允许求解器完全跳过任何相关计算。这使您可以自定义后台执行的操作并摆脱不必要的开销。<br><img src="/.io//9.jpg" alt="9"> </p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://SuperSoybeanmilk.github.io">I401</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://supersoybeanmilk.github.io/2024/06/17/Obi%20Rope%E6%8F%92%E4%BB%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">https://supersoybeanmilk.github.io/2024/06/17/Obi%20Rope%E6%8F%92%E4%BB%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://SuperSoybeanmilk.github.io" target="_blank">I401</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="../../../../tags/unty/">unty</a><a class="post-meta__tags" href="../../../../tags/Obi-Rope/">Obi Rope</a><a class="post-meta__tags" href="../../../../tags/%E7%BB%B3%E5%AD%90/">绳子</a></div><div class="post_share"><div class="social-share" data-image="../../../../img/cover/bq.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/gh/overtrue/share.js@master/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="../Unity%20Mirror%E5%A4%9A%E4%BA%BA%E8%81%94%E6%9C%BA%E6%A1%86%E6%9E%B6%E5%9F%BA%E7%A1%80%E5%BC%80%E5%8F%91/"><img class="next-cover" src="../../../../img/cover/bq.png" onerror="onerror=null;src='../../../../img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Unity Mirror多人联机框架基础开发</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="../Unity%20Mirror%E5%A4%9A%E4%BA%BA%E8%81%94%E6%9C%BA%E6%A1%86%E6%9E%B6%E5%9F%BA%E7%A1%80%E5%BC%80%E5%8F%91/" title="Unity Mirror多人联机框架基础开发"><img class="cover" src="../../../../img/cover/bq.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-17</div><div class="title">Unity Mirror多人联机框架基础开发</div></div></a></div><div><a href="../../12/Unity%20Mirror%E6%8F%92%E4%BB%B6%E8%B8%A9%E5%9D%91%E5%90%88%E9%9B%86/" title="Unity Mirror插件踩坑合集"><img class="cover" src="../../../../img/cover/yxz.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-12</div><div class="title">Unity Mirror插件踩坑合集</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="../img/head.png" onerror="this.onerror=null;this.src='../img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">I401</div><div class="author-info__description">夏莱最強伝説と炼铜の专家!變態不審者です</div></div><div class="card-info-data site-data is-center"><a href="../archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="../tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="../categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/SuperSoybeanmilk"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://space.bilibili.com/13665792" target="_blank" title="bilibili"><i class="fa-brands fa-bilibili"></i></a><a class="social-icon" href="../tencent:/message/?uin=1476390042" target="_blank" title="QQ"><i class="fa-brands fa-qq"></i></a><a class="social-icon" href="../mailto:1476390042@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到I401的博客</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%8E%B2Obi-Rope-Blueprint"><span class="toc-number">1.</span> <span class="toc-text">🎲Obi Rope Blueprint</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%8E%AERope-Blueprint%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text">🎮Rope Blueprint简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%8E%AERope-Blueprint%E5%B1%9E%E6%80%A7"><span class="toc-number">1.2.</span> <span class="toc-text">🎮Rope Blueprint属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Thinckness%EF%BC%88%E5%8E%9A%E5%BA%A6%EF%BC%89"><span class="toc-number">1.2.1.</span> <span class="toc-text">Thinckness（厚度）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Resolution%EF%BC%88%E5%88%86%E8%BE%A8%E7%8E%87%EF%BC%89"><span class="toc-number">1.2.2.</span> <span class="toc-text">Resolution（分辨率）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pooled-Particles%EF%BC%88%E6%B1%87%E9%9B%86%E7%B2%92%E5%AD%90%EF%BC%8C%E4%BB%85%E9%99%90Rope-Blueprint%EF%BC%89"><span class="toc-number">1.2.3.</span> <span class="toc-text">Pooled Particles（汇集粒子，仅限Rope Blueprint）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%8E%B2Obi-Solver"><span class="toc-number">2.</span> <span class="toc-text">🎲Obi Solver</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%8E%AEObi-Solver%E7%AE%80%E4%BB%8B"><span class="toc-number">2.1.</span> <span class="toc-text">🎮Obi Solver简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%8E%AEObi-Solver%E5%B1%9E%E6%80%A7"><span class="toc-number">2.2.</span> <span class="toc-text">🎮Obi Solver属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Backend%EF%BC%88%E5%90%8E%E5%8F%B0%EF%BC%89"><span class="toc-number">2.2.1.</span> <span class="toc-text">Backend（后台）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Oni"><span class="toc-number">2.2.1.1.</span> <span class="toc-text">Oni</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Burst"><span class="toc-number">2.2.1.2.</span> <span class="toc-text">Burst</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mode%EF%BC%88%E6%A8%A1%E5%BC%8F%EF%BC%89"><span class="toc-number">2.2.2.</span> <span class="toc-text">Mode（模式）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Interpolation%EF%BC%88%E6%8F%92%E5%80%BC%EF%BC%89"><span class="toc-number">2.2.3.</span> <span class="toc-text">Interpolation（插值）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gravity-Space%EF%BC%88%E9%87%8D%E5%8A%9B%E7%A9%BA%E9%97%B4%EF%BC%89"><span class="toc-number">2.2.4.</span> <span class="toc-text">Gravity Space（重力空间）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gravity%EF%BC%88%E9%87%8D%E5%8A%9B%EF%BC%89"><span class="toc-number">2.2.5.</span> <span class="toc-text">Gravity（重力）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sleep-Threshold%EF%BC%88%E4%BC%91%E7%9C%A0%E9%98%88%E5%80%BC%EF%BC%89"><span class="toc-number">2.2.6.</span> <span class="toc-text">Sleep Threshold（休眠阈值）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Damping%EF%BC%88%E9%98%BB%E5%B0%BC%EF%BC%89"><span class="toc-number">2.2.7.</span> <span class="toc-text">Damping（阻尼）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#World-linear-Inertia-Scale%EF%BC%88%E4%B8%96%E7%95%8C%E7%BA%BF%E6%80%A7%E6%83%AF%E6%80%A7%E6%A0%87%E5%BA%A6%EF%BC%89"><span class="toc-number">2.2.8.</span> <span class="toc-text">World linear Inertia Scale（世界线性惯性标度）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#World-Angular-Inertia-Scale%EF%BC%88%E4%B8%96%E7%95%8C%E7%BA%BF%E6%80%A7%E6%83%AF%E6%80%A7%E6%A0%87%E5%BA%A6%EF%BC%89"><span class="toc-number">2.2.9.</span> <span class="toc-text">World Angular Inertia Scale（世界线性惯性标度）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Max-Anisotropy%EF%BC%88%E6%9C%80%E5%A4%A7%E5%90%84%E5%90%91%E5%BC%82%E6%80%A7%EF%BC%89"><span class="toc-number">2.2.10.</span> <span class="toc-text">Max Anisotropy（最大各向异性）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Simulate-When-Invisible%EF%BC%88%E4%B8%8D%E5%8F%AF%E8%A7%81%E6%A8%A1%E6%8B%9F%EF%BC%89"><span class="toc-number">2.2.11.</span> <span class="toc-text">Simulate When Invisible（不可见模拟）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Collision-settings"><span class="toc-number">2.2.12.</span> <span class="toc-text">Collision settings</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Continuous-collision-detection-CCD"><span class="toc-number">2.2.12.1.</span> <span class="toc-text">Continuous collision detection (CCD)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Collision-margin-%E7%A2%B0%E6%92%9E%E8%BE%B9%E8%B7%9D"><span class="toc-number">2.2.12.2.</span> <span class="toc-text">Collision margin (碰撞边距)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Max-Depenetration-%E6%9C%80%E5%A4%A7%E7%A9%BF%E9%80%8F%E9%80%9F%E5%BA%A6"><span class="toc-number">2.2.12.3.</span> <span class="toc-text">Max Depenetration (最大穿透速度)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shock-propagation-%E6%BF%80%E6%B3%A2%E4%BC%A0%E6%92%AD"><span class="toc-number">2.2.12.4.</span> <span class="toc-text">Shock propagation (激波传播)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Surface-Collision-Iterations-%E8%A1%A8%E9%9D%A2%E7%A2%B0%E6%92%9E%E8%BF%AD%E4%BB%A3"><span class="toc-number">2.2.12.5.</span> <span class="toc-text">Surface Collision Iterations (表面碰撞迭代)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Surface-collision-tolerance-%E8%A1%A8%E9%9D%A2%E7%A2%B0%E6%92%9E%E5%AE%B9%E9%99%90"><span class="toc-number">2.2.12.6.</span> <span class="toc-text">Surface collision tolerance (表面碰撞容限)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Constraint-settings%EF%BC%88%E7%BA%A6%E6%9D%9F%E8%AE%BE%E7%BD%AE%EF%BC%89"><span class="toc-number">2.2.13.</span> <span class="toc-text">Constraint settings（约束设置）</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="../2024/06/17/Obi%20Rope%E6%8F%92%E4%BB%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="Obi Rope插件学习笔记"><img src="../img/cover/bq.png" onerror="this.onerror=null;this.src='../img/404.jpg'" alt="Obi Rope插件学习笔记"/></a><div class="content"><a class="title" href="../2024/06/17/Obi%20Rope%E6%8F%92%E4%BB%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="Obi Rope插件学习笔记">Obi Rope插件学习笔记</a><time datetime="2024-06-17T07:07:00.000Z" title="发表于 2024-06-17 15:07:00">2024-06-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="../2024/06/17/Unity%20Mirror%E5%A4%9A%E4%BA%BA%E8%81%94%E6%9C%BA%E6%A1%86%E6%9E%B6%E5%9F%BA%E7%A1%80%E5%BC%80%E5%8F%91/" title="Unity Mirror多人联机框架基础开发"><img src="../img/cover/bq.png" onerror="this.onerror=null;this.src='../img/404.jpg'" alt="Unity Mirror多人联机框架基础开发"/></a><div class="content"><a class="title" href="../2024/06/17/Unity%20Mirror%E5%A4%9A%E4%BA%BA%E8%81%94%E6%9C%BA%E6%A1%86%E6%9E%B6%E5%9F%BA%E7%A1%80%E5%BC%80%E5%8F%91/" title="Unity Mirror多人联机框架基础开发">Unity Mirror多人联机框架基础开发</a><time datetime="2024-06-17T07:07:00.000Z" title="发表于 2024-06-17 15:07:00">2024-06-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="../2024/06/12/Unity%20Mirror%E6%8F%92%E4%BB%B6%E8%B8%A9%E5%9D%91%E5%90%88%E9%9B%86/" title="Unity Mirror插件踩坑合集"><img src="../img/cover/yxz.png" onerror="this.onerror=null;this.src='../img/404.jpg'" alt="Unity Mirror插件踩坑合集"/></a><div class="content"><a class="title" href="../2024/06/12/Unity%20Mirror%E6%8F%92%E4%BB%B6%E8%B8%A9%E5%9D%91%E5%90%88%E9%9B%86/" title="Unity Mirror插件踩坑合集">Unity Mirror插件踩坑合集</a><time datetime="2024-06-12T07:10:00.000Z" title="发表于 2024-06-12 15:10:00">2024-06-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="../2022/05/11/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E7%BB%8F%E9%AA%8C%E8%AE%B0%E5%BD%95/" title="个人博客搭建经验记录"><img src="../img/cover/yxz.png" onerror="this.onerror=null;this.src='../img/404.jpg'" alt="个人博客搭建经验记录"/></a><div class="content"><a class="title" href="../2022/05/11/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E7%BB%8F%E9%AA%8C%E8%AE%B0%E5%BD%95/" title="个人博客搭建经验记录">个人博客搭建经验记录</a><time datetime="2022-05-11T07:11:54.000Z" title="发表于 2022-05-11 15:11:54">2022-05-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="../2022/05/07/%E9%91%AB%E5%8F%B2/" title="鑫史"><img src="../img/cover/yxz.png" onerror="this.onerror=null;this.src='../img/404.jpg'" alt="鑫史"/></a><div class="content"><a class="title" href="../2022/05/07/%E9%91%AB%E5%8F%B2/" title="鑫史">鑫史</a><time datetime="2022-05-07T07:10:00.000Z" title="发表于 2022-05-07 15:10:00">2022-05-07</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By I401</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="../../../../js/utils.js"></script><script src="../../../../js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>(()=>{
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'hello-cloudbase-9g88ju8g004e719c',
+      region: '',
+      onCommentLoaded: function () {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+  }
+
+  const getCount = () => {
+    twikoo.getCommentsCount({
+      envId: 'hello-cloudbase-9g88ju8g004e719c',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      document.getElementById('twikoo-count').innerText = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const runFn = () => {
+    init()
+    GLOBAL_CONFIG_SITE.isPost && getCount()
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') {
+      setTimeout(runFn,0)
+      return
+    } 
+    getScript('https://cdn.jsdelivr.net/npm/twikoo@1/dist/twikoo.all.min.js').then(runFn)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !true) {
+    if (true) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script></div><script src="/live2d-widget/autoload.js"></script><div class="aplayer no-destroy" data-id="7429070758" data-server="netease" data-type="playlist" data-autoplay="false" data-fixed="true"> </div><script id="canvas_nest" defer="defer" color="128,128,128" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-nest.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer@1/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start -->
+  <script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/hexo-github-calendar@1.21/hexo_githubcalendar.js"></script>
+  <script data-pjax>
+        function GithubCalendarConfig(){
+            var git_githubapiurl ="https://python-github-calendar-api.vercel.app/api?SuperSoybeanmilk";
+            var git_color =['#ebedf0', '#f0fff4', '#dcffe4', '#bef5cb', '#85e89d', '#34d058', '#28a745', '#22863a', '#176f2c', '#165c26', '#144620'];
+            var git_user ="SuperSoybeanmilk";
+            var parent_div_git = document.getElementById('recent-posts');
+            var git_div_html = '<div class="recent-post-item" style="width:100%;height:auto;padding:10px;"><div id="github_loading" style="width:10%;height:100%;margin:0 auto;display: block"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 50 50" style="enable-background:new 0 0 50 50" xml:space="preserve"><path fill="#d0d0d0" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z" transform="rotate(275.098 25 25)"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"></animateTransform></path></svg></div><div id="github_container"></div></div>';
+            if(parent_div_git && location.pathname =='/'){
+                console.log('已挂载github calendar')
+                // parent_div_git.innerHTML=git_div_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",git_div_html) // 有报错，但不影响使用(支持pjax跳转)
+            };
+            GithubCalendar(git_githubapiurl,git_color,git_user)
+        }
+        if(document.getElementById('recent-posts')){
+            GithubCalendarConfig()
+        }
+    </script>
+    <style>#github_container{min-height:280px}@media screen and (max-width:650px) {#github_container{background-image:;min-height:0px}}</style>
+    <style></style><script data-pjax>function electric_clock_injector_config(){
+                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+                var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img id="card-clock-loading" src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-clock/clock/images/weather/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading" class="entered loading"></div></div></div></div></div>';
+                console.log('已挂载electric_clock')
+                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
+            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='/'|| '/' ==='all')){
+
+            electric_clock_injector_config()
+        } </script><script src="https://pv.sohu.com/cityjson?ie=utf-8"></script><script data-pjax  src="https://cdn.jsdelivr.net/gh/Zfour/hexo-electric-clock@1.0.6/clock.js"></script><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://vercel.com/" style="margin-inline:5px" data-title="本站采用双线部署，默认线路托管于Vercel" title=""><img src="https://img.shields.io/badge/Hosted-Vercel-brightgreen?style=flat&amp;logo=Vercel" alt=""/></a><a class="github-badge" target="_blank" href="https://vercel.com/" style="margin-inline:5px" data-title="本站采用双线部署，联通线路托管于Coding" title=""><img src="https://img.shields.io/badge/Hosted-Coding-0cedbe?style=flat&amp;logo=Codio" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="js/footer-beautify-runtime.js"></script><!-- hexo injector body_end end --></body></html>
