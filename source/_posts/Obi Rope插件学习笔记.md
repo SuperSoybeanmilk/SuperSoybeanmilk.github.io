@@ -4,6 +4,9 @@ toc: true
 title: Obi Rope插件学习笔记
 date: 2024-06-17 15:07:00
 cover: /img/cover/bq.png
+categories:
+    - 技术博文
+    - Unity插件
 tags:
     - unty
     - Obi Rope
@@ -240,9 +243,50 @@ SOR代表逐次超松弛。当试图去满足约束，一个改善收敛的方�
 这些工具允许你平移/旋转/缩放所选的控制点，它们类似于Unity中的平移/旋转/缩放变换小工具。
 
 
+#### __添加控制点工具__
+<img src="AddControlPoint.png" style="display:inline-block;">
 
+此工具能够直观地向样条线添加控制点。鼠标光标和样条曲线中最近的点之间将出现一条绿色虚线。单击将在该位置的曲线中插入一个新的控制点。
 
+#### __移除控制点工具__
+<img src="RemoveControlPoint.png" style="display:inline-block;">
  
+此工具能够直观地从样条曲线中删除控制点。鼠标光标和样条曲线中最近的点之间将出现一条红色虚线。单击将删除曲线中最近的控制点。
 
+#### __打开/关闭路径__
+<img src="OpenCloseCurve.png" style="display:inline-block;">
 
+路径可以是开放的（两端独立）或封闭的（曲线遵循封闭的路径，两端共享相同的位置和切线）。
 
+#### __定向工具（仅杆子）__
+<img src="OrientControlPoint.png" style="display:inline-block;">
+
+此工具允许您定义每个控制点的方向。这允许您指定杆的剩余扭曲。
+
+#### __切换切线控制柄__
+<img src="TangentHandles.png" style="display:inline-block;">
+
+打开/关闭切线控制柄。
+
+#### __切换厚度控制柄__
+<img src="ThicknessHandles.png" style="display:inline-block;">
+
+打开/关闭厚度控制柄。
+
+# 🎲Obi Path Smoother
+
+## 🎮Obi Path Smoother属性
+
+### __Decimation（抽取）__
+用于适应的阈值会基于它的曲率减少绳索的帧数。在内部，它使用一个迭代的拉默-道格拉斯-普克（Ramer-Douglas-Peucker）抽取算法的变体。设置抽取为0将不会执行任何减少。高值将从绳子的直段删除一些帧，来使渲染成本更低。
+
+以下图像显示了在线框模式下使用ObiRopeExtruddeRefender渲染的绳索，以清楚地看到抽取的效果：
+![19](19.jpg) 
+
+### __Smoothing（平滑）__
+抽取之后应用于绳子几何形状的平滑迭代。在内部，它使用封闭形式的Chaikin's corner-cutting 算法的变体。设置平滑为0将不会执行任何平滑。更高的值将在已存在的分段之间插入额外的分段。结合低“分辨率”的蓝图和高“平滑度”，会让你生成可视化的由粒子构成的赏心悦目的绳子。
+![20](20.jpg) 
+
+### __twist（扭曲）__
+每个绳索段应用度数表示的扭转。例如，如果你想制作一个链条，其中每个链环都相对于前一个链环扭转90度，那么这个值应设为90。
+![21](21.jpg)
