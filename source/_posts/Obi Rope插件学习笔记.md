@@ -290,3 +290,35 @@ SOR代表逐次超松弛。当试图去满足约束，一个改善收敛的方�
 ### __twist（扭曲）__
 每个绳索段应用度数表示的扭转。例如，如果你想制作一个链条，其中每个链环都相对于前一个链环扭转90度，那么这个值应设为90。
 ![21](21.jpg)
+
+# 🎲Obi Particle Renderer
+
+## 🎮Obi Particle Renderer介绍
+由于Obi在内部是通过粒子组成的（如布料、绳索、流体等），它会为你在场景中显示出组成的粒子。这既可以是出于调试目的，也可以作为一种备选的可视化模式。要渲染某个元素的粒子，只需为其添加一个ObiParticleRenderer组件。任何继承自ObiActor的类都可以附加粒子渲染器：
+ObiCloth
+ObiTearableCloth
+ObiRope
+ObiRod
+ObiBone
+ObiSoftbody
+ObiEmitter
+有两个粒子渲染器组件：ObiParticleRenderer和ObiInstructParticleRenderer（仅限Obi 4.1及以上版本）
+![23](23.jpg)
+
+
+## 🎮Obi Particle Renderer属性
+
+### __Render（渲染）__
+渲染表示粒子的网格时使用的渲染参数。有关详细信息，请参阅Unity的文档。
+
+### __Shader（着色器）__
+着色器
+
+### __Particle Color（粒子颜色）__
+此属性可以修改显示粒子的颜色
+
+### __Particle Scale（粒子尺寸）__
+此属性可以修改显示粒子的大小
+<font color='red'>更改半径比例不会影响演员粒子的实际物理大小。它只是把它们画得比实际更大或更小。当涉及碰撞、流体相互作用等时，它们仍将使用其真实半径。</font>
+
+
