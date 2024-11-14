@@ -23,7 +23,6 @@ ClosestPoint 简介：
     // Update is called once per frame
     void Update()
     {
-        
         Debug.DrawLine(
             //返回A1点到A2collider表面最近的一个点
             A2.GetComponent<Collider>().bounds.ClosestPoint(A1.transform.position), 
@@ -32,5 +31,10 @@ ClosestPoint 简介：
             );
     }
 ```
+
+2024.9.4更新
+上面这个方法如果线缆的collider是mesh collider就不行，因为mesh collider不是凸面模型，如果要用mesh collider做检测的话可以用Physics.BoxCast
+![2](2.gif) 
+先简历一个方形的碰撞体
 
 # 🎲获取两个物体之间的最短距离
